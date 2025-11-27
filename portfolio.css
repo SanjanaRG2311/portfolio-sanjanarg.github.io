@@ -1,0 +1,827 @@
+/* Portfolio Link Wrapper */
+.portfolio-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    position: relative;
+}
+
+.portfolio-link > *:not(a) {
+    pointer-events: none;
+}
+
+.portfolio-link a {
+    pointer-events: auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 0. Global Setup and Variables */
+/* -------------------------------------------------------------------------- */
+
+:root {
+    --color-dark-bg: #111827; /* Dark Tech Background */
+    --color-card-bg: #1f2937; /* Slightly Lighter Card Background */
+    --color-primary-neon: #00bfff; /* Bright Neon Blue */
+    --color-secondary-neon: #00ffff; /* Cyan Glow */
+    --color-tertiary-neon: #34d399; /* Green Accent */
+    --color-text-light: #f3f4f6; /* Default Light Text */
+    --color-text-muted: #9ca3af; /* Muted Text */
+    
+    --font-sans: 'Inter', sans-serif;
+    --font-mono: 'Roboto Mono', monospace;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 3rem;
+    --spacing-xl: 6rem;
+    --border-radius: 0.5rem;
+    --transition-speed: 0.3s;
+}
+
+/* Keyframe Definitions for Futuristic Animations */
+@keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 5px var(--color-primary-neon), 0 0 10px var(--color-primary-neon); }
+    50% { box-shadow: 0 0 15px var(--color-secondary-neon), 0 0 25px var(--color-secondary-neon); }
+}
+
+@keyframes spin-slow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes scan-line {
+    0% { transform: translateY(-100%); opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { transform: translateY(100%); opacity: 0.5; }
+}
+
+/* -------------------------------------------------------------------------- */
+/* 1. Base Styles & Reset */
+/* -------------------------------------------------------------------------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    color: var(--color-text-light);
+    background-color: var(--color-dark-bg);
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-primary-neon);
+    transition: color var(--transition-speed);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+.section {
+    padding: var(--spacing-xl) 0;
+    position: relative;
+    overflow: hidden; /* Contains the scroll reveal animation */
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.8rem;
+    font-weight: 900;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text-light);
+    text-shadow: 0 0 5px rgba(0, 191, 255, 0.5);
+    position: relative;
+}
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--color-primary-neon), transparent);
+    margin: 10px auto 0;
+    animation: glow-pulse 3s infinite alternate;
+}
+
+.text-cyan {
+    color: var(--color-secondary-neon);
+}
+
+/* Global Card Style */
+.card {
+    background-color: var(--color-card-bg);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 191, 255, 0.1);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 191, 255, 0.3), 0 0 25px rgba(0, 255, 255, 0.4);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 2. Buttons (Neon Style) */
+/* -------------------------------------------------------------------------- */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: var(--font-mono);
+    transition: all var(--transition-speed) ease;
+    border: 2px solid transparent;
+}
+.ml-2 { margin-left: 0.5rem; }
+
+.btn-neon-primary {
+    background: rgba(0, 191, 255, 0.1);
+    color: var(--color-primary-neon);
+    border-color: var(--color-primary-neon);
+    text-shadow: 0 0 5px rgba(0, 191, 255, 0.7);
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+}
+.btn-neon-primary:hover {
+    background: rgba(0, 191, 255, 0.3);
+    box-shadow: 0 0 20px var(--color-secondary-neon), 0 0 40px rgba(0, 255, 255, 0.3);
+}
+
+.btn-neon-secondary {
+    background: rgba(156, 163, 175, 0.1);
+    color: var(--color-text-muted);
+    border-color: var(--color-text-muted);
+}
+.btn-neon-secondary:hover {
+    background: rgba(156, 163, 175, 0.2);
+    color: var(--color-text-light);
+    border-color: var(--color-text-light);
+}
+
+.btn-neon-tertiary {
+    background: rgba(52, 211, 153, 0.1);
+    color: var(--color-tertiary-neon);
+    border-color: var(--color-tertiary-neon);
+    text-shadow: 0 0 5px rgba(52, 211, 153, 0.7);
+}
+.btn-neon-tertiary:hover {
+    background: rgba(52, 211, 153, 0.2);
+    box-shadow: 0 0 20px rgba(52, 211, 153, 0.7);
+}
+
+.btn-full-width { width: 100%; justify-content: center; }
+
+/* -------------------------------------------------------------------------- */
+/* Social Icons in Hero */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.social-icon {
+    color: var(--color-text-light);
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(0, 191, 255, 0.1);
+    border: 1px solid var(--color-primary-neon);
+    position: relative;
+    overflow: hidden;
+}
+
+.social-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 191, 255, 0.2), transparent);
+    transition: 0.5s;
+}
+
+.social-icon:hover::before {
+    left: 100%;
+}
+
+.social-icon:hover {
+    color: var(--color-secondary-neon);
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px var(--color-primary-neon);
+}
+
+/* 3. Header & Navigation */
+/* -------------------------------------------------------------------------- */
+
+.header {
+    background-color: rgba(17, 24, 39, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 191, 255, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 80px;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--color-primary-neon);
+    font-family: var(--font-mono);
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+}
+
+.nav-menu {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+}
+
+.nav-link {
+    font-weight: 500;
+    color: var(--color-text-light);
+}
+
+.nav-link:hover {
+    color: var(--color-primary-neon);
+    text-shadow: 0 0 5px var(--color-secondary-neon);
+}
+
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--color-primary-neon);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 4. Hero Section */
+/* -------------------------------------------------------------------------- */
+
+.hero-section {
+    padding: 10rem 0;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.ai-grid-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(to right, rgba(0, 191, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 191, 255, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.5;
+}
+
+.hero-content {
+    z-index: 10;
+    max-width: 900px;
+    position: relative;
+}
+
+.hero-role-mono {
+    font-family: var(--font-mono);
+    color: var(--color-secondary-neon);
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    animation: glow-pulse 3s infinite alternate;
+}
+
+.hero-title {
+    font-size: 4.5rem;
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+    text-shadow: 0 0 10px rgba(0, 191, 255, 0.7);
+}
+
+.hero-statement {
+    font-size: 1.4rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-lg);
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+/* Robot Hologram SVG Animation (Neural Network/Vision Overlay Effect) */
+.robot-hologram {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    width: 300px;
+    height: 300px;
+    opacity: 0.15;
+    z-index: 5;
+    pointer-events: none;
+}
+.robot-hologram svg {
+    transform: rotate(15deg);
+}
+.svg-ring { animation: spin-slow 15s linear infinite; }
+.svg-scan-line { animation: scan-line 4s infinite linear; }
+.svg-box-glow { animation: glow-pulse 2s infinite alternate; }
+
+/* -------------------------------------------------------------------------- */
+/* 5. About Me Section */
+/* -------------------------------------------------------------------------- */
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--spacing-lg);
+    align-items: stretch;
+}
+
+.about-text p {
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text-light);
+}
+.about-text .quote {
+    font-style: italic;
+    font-family: var(--font-mono);
+    color: var(--color-secondary-neon);
+    margin-bottom: var(--spacing-md);
+}
+
+.about-stats {
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.about-stats h3 {
+    color: var(--color-primary-neon);
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+}
+.about-stats li {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text-muted);
+}
+.icon-stat {
+    margin-right: var(--spacing-sm);
+    color: var(--color-tertiary-neon);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 6. Skills Section (Pill Grid) */
+/* -------------------------------------------------------------------------- */
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.skill-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
+    background-color: rgba(31, 41, 55, 0.7);
+    color: var(--color-secondary-neon);
+    border: 2px solid rgba(0, 191, 255, 0.3);
+    box-shadow: none;
+}
+
+.skill-card::before {
+    content: attr(data-icon);
+    font-family: 'Font Awesome 6 Free'; /* Use the Font Awesome font */
+    font-weight: 900; /* Solid icons */
+    margin-right: 0.75rem;
+    color: var(--color-primary-neon);
+    font-size: 1.2rem;
+    transition: transform var(--transition-speed);
+}
+.skill-card:hover {
+    color: var(--color-text-light);
+    transform: scale(1.05);
+    border-color: var(--color-secondary-neon);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+}
+.skill-card:hover::before {
+    transform: rotate(10deg) scale(1.1);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 7. Projects Section (Card Grid) */
+/* -------------------------------------------------------------------------- */
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.project-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 250px;
+}
+
+.project-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary-neon);
+    margin-bottom: 0.25rem;
+}
+.project-subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--color-secondary-neon);
+    margin-bottom: 1rem;
+}
+.project-description {
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+    flex-grow: 1;
+}
+
+.tech-stack {
+    margin-bottom: 1rem;
+}
+.badge {
+    display: inline-block;
+    background-color: rgba(0, 191, 255, 0.1);
+    color: var(--color-primary-neon);
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.project-impact {
+    font-weight: 700;
+    color: var(--color-tertiary-neon);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 8. Experience & Education Section (Timeline) */
+/* -------------------------------------------------------------------------- */
+
+.timeline-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+.timeline-heading {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text-light);
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    border-left: 5px solid var(--color-primary-neon);
+    padding-left: 10px;
+}
+
+.timeline {
+    position: relative;
+    border-left: 3px solid rgba(0, 191, 255, 0.2);
+    margin-left: 10px;
+    padding-left: 20px;
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: var(--spacing-lg);
+    padding-left: 30px;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -17px; /* Align with the timeline line */
+    top: 5px;
+    width: 25px;
+    height: 25px;
+    background-color: var(--color-dark-bg);
+    border: 4px solid var(--color-primary-neon);
+    border-radius: 50%;
+    z-index: 10;
+    animation: glow-pulse 3s infinite alternate;
+}
+
+.timeline-date {
+    position: absolute;
+    left: -120px;
+    width: 100px;
+    top: 5px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--color-secondary-neon);
+    text-align: right;
+    padding-right: 15px;
+}
+
+.timeline-content {
+    margin-left: 10px;
+}
+
+.timeline-content h4 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-light);
+}
+
+.timeline-content ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    color: var(--color-text-muted);
+}
+.timeline-content li {
+    margin-bottom: 0.3rem;
+}
+.timeline-content p strong {
+    color: var(--color-tertiary-neon);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 9. Certifications Section */
+/* -------------------------------------------------------------------------- */
+
+.certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.cert-card {
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+.cert-card i {
+    font-size: 1.5rem;
+    color: var(--color-primary-neon);
+    margin-right: var(--spacing-md);
+}
+.cert-card .issuer {
+    font-family: var(--font-mono);
+    font-weight: 400;
+    color: var(--color-text-muted);
+    margin-left: auto;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 10. Contact Section */
+/* -------------------------------------------------------------------------- */
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--spacing-lg);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.contact-form {
+    padding: var(--spacing-lg);
+}
+.contact-form .form-title, .contact-info .info-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-secondary-neon);
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: rgba(31, 41, 55, 0.7);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: var(--border-radius);
+    color: var(--color-text-light);
+    font-family: var(--font-sans);
+    transition: border-color var(--transition-speed);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--color-primary-neon);
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+}
+
+.contact-info {
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-muted);
+}
+.info-item i {
+    font-size: 1.2rem;
+    width: 30px;
+    color: var(--color-primary-neon);
+}
+.info-item a {
+    color: var(--color-text-light);
+    text-decoration: none;
+    transition: color var(--transition-speed);
+}
+.info-item a:hover {
+    color: var(--color-secondary-neon);
+}
+
+.form-message {
+    text-align: center;
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-family: var(--font-mono);
+}
+
+.form-message.success {
+    background-color: rgba(52, 211, 153, 0.1);
+    color: var(--color-tertiary-neon);
+}
+
+.form-message.error {
+    background-color: rgba(220, 38, 38, 0.1);
+    color: #dc2626;
+}
+.hidden { display: none; }
+
+/* -------------------------------------------------------------------------- */
+/* 11. Footer */
+/* -------------------------------------------------------------------------- */
+
+.footer {
+    background-color: #0d121a;
+    padding: 1.5rem 0;
+    font-size: 0.9rem;
+    text-align: center;
+    border-top: 1px solid rgba(0, 191, 255, 0.1);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 12. Scroll Reveal & Responsive Design */
+/* -------------------------------------------------------------------------- */
+
+/* Scroll Reveal (Handled by JS to apply .active) */
+.reveal {
+    opacity: 0;
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    transform: translateY(30px);
+}
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Mobile (max-width 768px) */
+@media (max-width: 768px) {
+    .section {
+        padding: 4rem 0;
+    }
+    .section-title {
+        font-size: 2rem;
+    }
+    .hero-title {
+        font-size: 3rem;
+    }
+    .hero-statement {
+        font-size: 1.1rem;
+    }
+    .robot-hologram {
+        display: none; /* Hide complex animation on mobile */
+    }
+
+    /* Navigation Toggle */
+    .nav-toggle {
+        display: block;
+    }
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        background-color: var(--color-dark-bg);
+        border-top: 1px solid rgba(0, 191, 255, 0.2);
+        padding: var(--spacing-md) 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    }
+    .nav-menu.open {
+        display: flex;
+    }
+    .nav-menu li {
+        width: 100%;
+        text-align: center;
+    }
+    .nav-link {
+        display: block;
+        padding: 0.5rem 0;
+    }
+    .nav-link.btn-primary {
+        width: 80%;
+        margin: 1rem auto;
+    }
+
+    /* Grid Layouts */
+    .about-grid,
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+    .about-stats {
+        order: -1;
+    }
+    .contact-form, .contact-info {
+        padding: var(--spacing-md);
+    }
+
+    /* Timeline */
+    .timeline {
+        padding-left: 10px;
+    }
+    .timeline-item {
+        padding-left: 20px;
+    }
+    .timeline-item::before {
+        left: -12px;
+    }
+    .timeline-date {
+        position: static;
+        text-align: left;
+        padding-right: 0;
+        margin-bottom: 0.5rem;
+        color: var(--color-primary-neon);
+    }
+}
